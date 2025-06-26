@@ -9,7 +9,7 @@ async function getUser(req) {
   if (!user) throw new Error("Unauthorized");
   return { supabase, user };
 }
-export async function PATCH(req, { params }) {
+export async function PATCH(req, context) {
   try {
     const supabase = await createClient();
     const {
@@ -21,7 +21,7 @@ export async function PATCH(req, { params }) {
     const { error } = await supabase
       .from("todos")
       .update({ selesai })
-      .eq("id", params.id)
+      .eq("id", context.params.id)
       .eq("user_id", user.id);
 
     if (error) throw error;
